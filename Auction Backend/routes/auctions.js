@@ -2,20 +2,19 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db");
 
-//gets all the products
-router.get('/',async (req,res) => {
-    const {id} = req.params
-    if(id == 0){
-        const result = await db.query(`SELECT * FROM auctions`);
-        res.json(result.rows);
-    }
-    else{
-        const result = await db.query(`SELECT * FROM auctions where id = $1`,[id]);
-        res.json(result.rows[0]);
-    }
-    
-    
-})
+
+router.get('/', async (req, res) => {
+  const { id } = req.query;
+
+  if (id == -1 || !id) {
+    const result = await db.query(`SELECT * FROM auctions`);
+    res.send(result.rows);
+  } else {
+    const result = await db.query(`SELECT * FROM auctions WHERE id = $1`, [id]);
+    res.send(result.rows[0]);
+  }
+});
+
 
 
 
