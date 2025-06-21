@@ -5,7 +5,7 @@ const db = require("../db");
 //gets all the products
 router.get('/',async (req,res) => {
     
-    if(!req.body.id){
+    if(req.body.id == 0){
         const result = await db.query(`SELECT * FROM auctions`);
         res.json(result.rows);
     }
