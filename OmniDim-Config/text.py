@@ -1,14 +1,6 @@
-import requests
-
-url = "http://localhost:5001"  # use localhost if running locally
-headers = {
-    "Authorization": "Bearer YOUR_API_KEY",
-    "Content-Type": "application/json"
-}
-data = {
-    "input": "What's the latest bid on the PS5 Slim?",
-    "user_id": "user123"
-}
-
-response = requests.post(url, headers=headers, json=data)
-print("🤖 Agent says:", response.json())
+response = client.call.create(
+    agent_id="your_agent_id_here",
+    phone_number="+1234567890",  # or any other identifier for the user
+    metadata={}  # optional additional data
+)
+print(response)
