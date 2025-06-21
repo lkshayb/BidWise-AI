@@ -4,13 +4,12 @@ const db = require("../db");
 
 //gets all the products
 router.get('/',async (req,res) => {
-    
-    if(req.body.id == 0){
+    const {id} = req.params
+    if(id == 0){
         const result = await db.query(`SELECT * FROM auctions`);
         res.json(result.rows);
     }
     else{
-        const id = req.body.id;
         const result = await db.query(`SELECT * FROM auctions where id = $1`,[id]);
         res.json(result.rows[0]);
     }
