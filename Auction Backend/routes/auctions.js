@@ -7,10 +7,11 @@ router.get('/', async (req, res) => {
   const { id } = req.query;
 
   if (id == -1 || !id) {
-    const result = await db.query(`SELECT * FROM auctions`);
+    const result = await db.query(`SELECT *,end_time - NOW() AS time_remaining FROM auctions`);
+
     res.send(result.rows);
   } else {
-    const result = await db.query(`SELECT * FROM auctions WHERE id = $1`, [id]);
+    const result = await db.query(`SELECT *,end_time - NOW() AS time_remaining FROM auctions WHERE id = $1`, [id]);
     res.send(result.rows[0]);
   }
 });
@@ -45,6 +46,9 @@ router.post('/bid',async (req,res) => {
         );
         console.log("Update Result:",updateResult.rowCount)
 
+        const updatebids = await db.query(
+            "UPDATE auctions SET no_of_bids = no_of_bids + 1 WHERE id = $1",[id]
+        )
         res.send("!!! BID PLACED SUCCESSFULLY !!!");
 
     } catch(err){
@@ -53,5 +57,26 @@ router.post('/bid',async (req,res) => {
     }
 })
 
+router.post('/add', async (req,res) => {
+    try{
+        const {product_name,desc,time_for_auction,initial_bid} = req.body;
+        console.log(`INCOMING PRODUCT UPLOAD --> name:${product_name} , decription:${desc} , time for auction :${time_for_auction} , initial bid : ${initial_bid}`)
+        
+        const start = new Date();
+        const end = new Date(start.getTime() + time_for_auction * 60000);
+
+        const start_time = start.toISOString();
+        const end_time = end.toISOString();
+
+        console.log(start_time,end_time)
+        const update = await db.query(
+            "INSERT INTO auctions (product_name,description,current_highest_bid,start_time,end_time) VALUES($1,$2,$3,$4,$5)",[product_name,desc,initial_bid,start_time,end_time]
+        )
+        res.send("Product added successfully")
+    }
+    catch(err){
+        res.send(err)
+    }
+})
 
 module.exports = router
