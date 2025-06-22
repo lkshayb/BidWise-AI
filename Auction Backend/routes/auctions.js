@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
 router.get('/bidhistory', async (req,res) => {
     try{
-        const id= req.body.id;
+        const id= req.query.id;
         console.log(id)
         const fetch = await db.query(
             "SELECT * FROM bids WHERE auction_id = $1",[id]
