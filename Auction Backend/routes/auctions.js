@@ -4,19 +4,39 @@ const db = require("../db");
 
 
 router.get('/', async (req, res) => {
-  const { id } = req.query;
+    try{
+        const { id } = req.query;
 
-  if (id == -1 || !id) {
-    const result = await db.query(`SELECT *,end_time - NOW() AS time_remaining FROM auctions`);
+        if (id == -1 || !id) {
+            const result = await db.query(`SELECT *,end_time - NOW() AS time_remaining FROM auctions`);
 
-    res.send(result.rows);
-  } else {
-    const result = await db.query(`SELECT *,end_time - NOW() AS time_remaining FROM auctions WHERE id = $1`, [id]);
-    res.send(result.rows[0]);
-  }
+            res.send(result.rows);
+        } else {
+            const result = await db.query(`SELECT *,end_time - NOW() AS time_remaining FROM auctions WHERE id = $1`, [id]);
+            res.send(result.rows[0]);
+        }
+    }
+    catch(err){
+        res.send("ERROR OCCURED :" ,err)
+    }
+ 
 });
 
+router.get('/bidhistory', async (req,res) => {
+    try{
+        const id= req.body.id;
+        console.log(id)
+        const fetch = await db.query(
+            "SELECT * FROM bids WHERE auction_id = $1",[id]
+        )
+        console.log(fetch.rows)
+        res.send(fetch.rows)
+    }
+    catch(err){
+        res.send("Error Occured:",err)
+    }
 
+})
 
 
 //post bid
@@ -59,8 +79,7 @@ router.post('/bid',async (req,res) => {
 
 router.post('/add', async (req,res) => {
     try{
-        console.log("FULL BODY RECEIVED:", req.body);
-        const { product_name, desc, time_for_auction, initial_bid } = req.body;
+        const {product_name,desc,time_for_auction,initial_bid} = req.body;
         console.log(`INCOMING PRODUCT UPLOAD --> name:${product_name} , decription:${desc} , time for auction :${time_for_auction} , initial bid : ${initial_bid}`)
         
         const start = new Date();
