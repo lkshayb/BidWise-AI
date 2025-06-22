@@ -59,7 +59,8 @@ router.post('/bid',async (req,res) => {
 
 router.post('/add', async (req,res) => {
     try{
-        const {product_name,desc,time_for_auction,initial_bid} = req.body;
+        console.log("FULL BODY RECEIVED:", req.body);
+        const { product_name, desc, time_for_auction, initial_bid } = req.body;
         console.log(`INCOMING PRODUCT UPLOAD --> name:${product_name} , decription:${desc} , time for auction :${time_for_auction} , initial bid : ${initial_bid}`)
         
         const start = new Date();
