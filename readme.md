@@ -1,7 +1,8 @@
 # 🎙️ Voice Agent for Real-Time Auction Participation , Bidding & Listing .
 
 An AI-powered voice assistant built using OmniDimension that enables users to interact with a real-time online auction system via web call. Users can query product details, monitor bids, and place new bids using their voice. Also the user can list their own product to the auction system.
-Backend Auction System Deployed on => https://auction-agent.onrender.com/auctions
+### Backend Auction System Deployed on => https://auction-agent.onrender.com/auctions
+### Frontend Deployed on => https://auction-agent.vercel.app
 
 
 ##  Features
