@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* In your main CSS */
+#chat-helper-button {
+    background-color: #000 !important;
+    border-radius: 10px !important;
+  }
+  
+  iframe[src*="omnidim.io"] {
+    border-radius: 30px !important;
+    z-index: 9999 !important;
+  }
+  

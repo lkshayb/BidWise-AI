@@ -1,5 +1,4 @@
 import {useEffect } from 'react'
-import { Routes, Route} from 'react-router-dom'
 import './App.css'
 
 
@@ -33,7 +32,8 @@ function Header() {
 }
 
 function App() {
-
+  
+  
   useEffect(() => {
     const script = document.createElement('script');
     script.id = 'omnidimension-web-widget';
