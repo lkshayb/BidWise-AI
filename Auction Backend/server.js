@@ -12,6 +12,11 @@ app.use(bodyParser.json());
 
 app.use("/auctions", auctionRoutes);
 
+app.get("/ping", (req, res) => {
+  console.log("Ping received");
+  res.send("Hello World");
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
