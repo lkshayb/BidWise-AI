@@ -1,7 +1,7 @@
 import {useEffect } from 'react'
 import { Routes, Route} from 'react-router-dom'
 import './App.css'
-import BotInteraction from './botinteraction'
+
 
 function Header() {
   return (
@@ -49,26 +49,18 @@ function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <main className="flex flex-col items-center justify-center min-h-screen bg-[#172046] pt-20">
-              <h1 className="text-4xl md:text-5xl font-bold text-white mt-12 mb-4 text-center">Active Auctions</h1>
-              <p className="text-lg text-gray-300 mb-8 text-center">Discover amazing deals and place bids with your voice</p>
-              <button
-                onClick={() => document.getElementById('chat-helper-button')?.click()}
-                className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-semibold shadow hover:opacity-90 transition mb-2"
-              >
-                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                Speak to AuctionBot
-              </button>
-              <div className="text-base text-blue-200 mt-1">Click to start voice interaction</div>
-            </main>
-          }
-        />
-        <Route path="/bot" element={<BotInteraction />} />
-      </Routes>
+      <main className="flex flex-col items-center justify-center min-h-screen bg-[#172046] pt-20">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mt-12 mb-4 text-center">Active Auctions</h1>
+        <p className="text-lg text-gray-300 mb-8 text-center">Discover amazing deals and place bids with your voice</p>
+        <button
+          onClick={() => document.getElementById('chat-helper-button')?.click()}
+          className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-semibold shadow hover:opacity-90 transition mb-2"
+        >
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          Speak to AuctionBot
+        </button>
+        <div className="text-base text-blue-200 mt-1">Click to start voice interaction</div>
+      </main>   
     </>
   )
 }
