@@ -6,7 +6,8 @@
 #chat-helper-button {
     background-color: #000 !important;
     border-radius: 10px !important;
-  }
+    margin-top: 100px !important
+   }
   
   iframe[src*="omnidim.io"] {
     border-radius: 30px !important;
