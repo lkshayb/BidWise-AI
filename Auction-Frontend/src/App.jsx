@@ -191,7 +191,7 @@ function CallAgentModal({ open, onClose }) {
         to_number: phone,
         call_context : {
           customer_name : name,
-          account_id : ACC-12345,
+          account_id : "ACC-12345",
           priority: "high"
         }
       })
