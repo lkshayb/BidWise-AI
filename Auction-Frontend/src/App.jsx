@@ -2,7 +2,7 @@ import {useEffect, useState } from 'react'
 import './App.css'
 
 
-function Header() {
+function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-[#11182a] px-8 py-4 flex items-center justify-between shadow-lg">
       <a href="/">
@@ -23,14 +23,12 @@ function Header() {
       <div className="flex items-center gap-4">
         <button onClick={() => document.getElementById('chat-helper-button')?.click()} className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold shadow hover:opacity-90 transition">
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          Talk to AuctionBot
         </button>
         <button
-          onClick={() => alert('You will receive a call from our agent soon!')}
+          onClick={loggedIn ? () => setShowCallModal(true) : () => setShowLoginPrompt(true)}
           className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-semibold shadow hover:opacity-90 transition"
         >
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          Get a Call from Agent
         </button>
       </div>
     </header>
@@ -251,7 +249,7 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
       <LoginPromptModal open={showLoginPrompt} onClose={() => setShowLoginPrompt(false)}
         onLogin={() => {
           setShowLoginPrompt(false);
