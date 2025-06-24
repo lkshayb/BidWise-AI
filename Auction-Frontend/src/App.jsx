@@ -72,7 +72,7 @@ function EmailLoginModal({ open, onClose, setLoggedIn }) {
       return;
     }
     setError('');
-    fetch('http://localhost:5000/send-otp', {
+    fetch('https://auction-agent.onrender.com/send-otp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ function EmailLoginModal({ open, onClose, setLoggedIn }) {
       return;
     }
     setError('');
-    fetch('http://localhost:5000/verify-otp', {
+    fetch('https://auction-agent.onrender.com/verify-otp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
