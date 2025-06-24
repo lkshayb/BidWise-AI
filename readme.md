@@ -17,6 +17,14 @@ An AI-powered voice assistant built using OmniDimension that enables users to in
 
 ---
 
+## ScreenShots
+### HomePage
+![image](https://github.com/user-attachments/assets/be15de39-7f5f-4a41-968d-043144b79697)
+### Web Call
+![image](https://github.com/user-attachments/assets/4f9176bb-0f8e-4ab5-94a1-9a8c4d1fa46e)
+
+
+
 ##  Tech Stack
 
 - **Backend:** Node.js, Express.js , Python (for agent creation)
