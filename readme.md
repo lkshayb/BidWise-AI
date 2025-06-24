@@ -3,7 +3,7 @@
 An AI-powered voice assistant built using OmniDimension that enables users to interact with a real-time online auction system via web call or a phone call. Users can query product details, monitor bids, and place new bids using their voice. Also the user can list their own product to the auction system.
 ### Backend Auction System Deployed on => https://auction-agent.onrender.com/auctions
 ### Frontend Deployed on => https://auction-agent.vercel.app
-### PostgresDB for auction system =>
+### PostgresDB for auction system => postgresql://auctionDB_owner:npg_gQRz3asb0iKY@ep-dark-sky-a8vh5bl5-pooler.eastus2.azure.neon.tech/auctionDB?sslmode=require
 
 ##  Features
 
