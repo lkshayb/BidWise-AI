@@ -174,7 +174,7 @@ function CallAgentModal({ open, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!/^\d{12}$/.test(phone)) {
+    if (!/^\d{10}$/.test(phone)) {
       setError('Please enter a valid 10-digit phone number.');
       return;
     }
@@ -189,7 +189,7 @@ function CallAgentModal({ open, onClose }) {
       },
       body: JSON.stringify({
         agent_id: 1518,
-        to_number: phone,
+        to_number: "+91" + phone,
         call_context : {
           customer_name : name,
           account_id : "ACC-12345",
