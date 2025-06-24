@@ -174,12 +174,13 @@ function CallAgentModal({ open, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!/^\d{10}$/.test(phone)) {
+    if (!/^\d{12}$/.test(phone)) {
       setError('Please enter a valid 10-digit phone number.');
       return;
     }
     setError('');
     // Here you would call your backend to send the call
+    console.log("hello")
     fetch('https://backend.omnidim.io/api/v1/calls/dispatch', {
       method: 'POST',
       headers: {
