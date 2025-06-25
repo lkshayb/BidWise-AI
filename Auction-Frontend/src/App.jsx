@@ -1,10 +1,12 @@
 import {useEffect, useState } from 'react'
 import './App.css'
+import {motion} from 'framer-motion'
+import {ProgressBar} from 'react-loader-spinner'
 
-
+//Header
 function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-[#11182a] px-8 py-4 flex items-center justify-between shadow-lg">
+    <header className="fixed top-0 left-0 w-full z-50  px-8 py-4 flex items-center justify-between shadow-lg bg-blue-500/30 backdrop-blur-md">
       <a href="/">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-500">
@@ -35,6 +37,7 @@ function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   )
 }
 
+// Login Prompt Component
 function LoginPromptModal({ open, onClose, onLogin }) {
   if (!open) return null;
   return (
@@ -48,6 +51,7 @@ function LoginPromptModal({ open, onClose, onLogin }) {
   );
 }
 
+// Email Form Component
 function EmailLoginModal({ open, onClose, setLoggedIn }) {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
@@ -165,6 +169,7 @@ function EmailLoginModal({ open, onClose, setLoggedIn }) {
   );
 }
 
+// Phone number & name form component
 function CallAgentModal({ open, onClose }) {
   const [name,setname] = useState('');
   const [phone, setPhone] = useState('');
@@ -233,23 +238,93 @@ function CallAgentModal({ open, onClose }) {
   );
 }
 
+
 function App() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [showCallModal, setShowCallModal] = useState(false);
+  const [getproduct,setgetproducts] = useState(false);
+  const [Products,setProducts] = useState([]);
 
+  // get omnidim widget
+  // useEffect(() => {
+  //   const script = document.createElement('script');
+  //   script.id = 'omnidimension-web-widget';
+  //   script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=8f73fa3f824b7bd2b3c3fc2db8d86ee3';
+  //   script.async = true;
+  //   document.body.appendChild(script);
+  // }, []);
 
+  // get product details
   useEffect(() => {
-    const script = document.createElement('script');
-    script.id = 'omnidimension-web-widget';
-    script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=8f73fa3f824b7bd2b3c3fc2db8d86ee3';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+    console.log("request success")
+    fetch('https://auction-agent.onrender.com/auctions', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setgetproducts(true)
+        setProducts(data)
+          
+      })
+      .catch(err => console.error('Error:', err));
+  },[])
 
+  // Product Card
+function ProductList({Products}){
+ 
+ 
   return (
-    <div>
+    <div className='flex'>
+      {Products.length == 0 ? 
+      <ProgressBar
+        visible={true}
+        height="80"
+        width="80"
+        barColor="white"
+        borderColor='white'
+        ariaLabel="progress-bar-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        />: null}
+      {Products.map((product, index) => (
+        <div key={index} className="bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-lg text-black">
+          <div className='mb-3 flex gap-3'>
+            <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" class="w-8 h-8 text-gray-700" aria-hidden="true">
+                <circle cx="16" cy="11.368" r="3.368" />
+                <path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z" />
+              </svg>
+              {product.no_of_bids}
+            </div>
+            <div className='bg-blue-400 min-w-[50px]   rounded-full flex items-center h-7 px-2'>
+              <svg xmlns="http://www.w3.org/2000/svg" className='w-5 h-5' viewBox="0 0 32 32">
+                <g data-name="9-Clock">
+                  <path d="M18 4.16V2h1a2 2 0 0 0 2-2l-8 .06A.22.22 0 0 1 13 0h-2a2 2 0 0 0 2 2h1v2.16a14 14 0 1 0 4 0zM16 30a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"/>
+                  <path d="M17 11h-2v7a1 1 0 0 0 .29.71l4 4 1.41-1.41-3.7-3.71z"/>
+                </g>
+              </svg>
+              <div className='ml-2'>{product.time_remaining.days} {product.time_remaining.days ? <span>days :</span> : null} {product.time_remaining.hours} {product.time_remaining.hours ? <span>hrs :</span> : null} {product.time_remaining.minutes} min</div>
+            </div>
+          </div>
+          
+          <span className='font-semibold text-xl'>Name</span> 
+          <div className='text-gray-800  mb-2'>{product.product_name}</div>
+          <span className='font-semibold text-xl'>Description</span> 
+          <div className='text-gray-800 mb-2'>{product.description}</div>
+          <span className='font-semibold text-xl'>Current Highest Bid</span>
+          <div className='text-gray-800 mb-2'>₹{product.current_highest_bid}</div>
+          
+        </div>
+      ))} 
+    </div>
+  )
+}
+  return (
+   
+      <div>
       <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
       <LoginPromptModal open={showLoginPrompt} onClose={() => setShowLoginPrompt(false)}
         onLogin={() => {
@@ -259,28 +334,63 @@ function App() {
       />
       <EmailLoginModal open={showEmailModal} onClose={() => setShowEmailModal(false)} setLoggedIn={setLoggedIn}/>
       <CallAgentModal open={showCallModal} onClose={() => setShowCallModal(false)}/>
-      <main className="flex text-white flex-col items-center justify-center min-h-screen bg-[#172046] pt-20">
-        <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Welcome to Auction Bot</h1>
-        <p className="text-lg text-gray-300 text-center">Discover amazing deals and place bids with your voice. </p>
-        <p className='mb-8 text-gray-400'>Powered By OmniDimension</p>
-        <button
-          onClick={() => document.getElementById('chat-helper-button')?.click()}
-          className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-semibold hover:opacity-90 transition mb-3"
-        >
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          Speak to AuctionBot
-        </button>
+
+      <div className="flex text-white flex-col items-center justify-center min-h-screen bg-gradient-to-t from-blue-700  to-green-800 pt-20">
+        <div className='items-center text-center'>
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Welcome to Auction Bot</h1>
+          </div>
+          <div>
+            <p className="text-lg text-gray-300 text-center">Discover amazing deals and place bids with your voice. </p>
+          </div>
+          <div>
+            <p className='mb-8 text-gray-400'>Powered By OmniDimension</p>
+          </div>
+          
+        </div>
         
-        <button
-          onClick={loggedIn ? () => setShowCallModal(true) : () => setShowLoginPrompt(true)}
-          className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-green-500 to-blue-500 text-white text-lg font-semibold hover:opacity-90 transition "
-        >
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          Get a Call from Agent
-        </button>
+        <div className='align-center flex flex-col justify-center'>
+          <button
+            onClick={() => document.getElementById('chat-helper-button')?.click()}
+            className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-semibold hover:opacity-90 transition mb-4"
+          >
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Speak to AuctionBot
+          </button>
+          
+          <button
+            onClick={loggedIn ? () => setShowCallModal(true) : () => setShowLoginPrompt(true)}
+            className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-green-500 to-blue-500 text-white text-lg font-semibold hover:opacity-90 transition "
+          >
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Get a Call from Agent
+          </button>
+        </div>
         
-      </main>   
+        
+        <span className='mt-32 flex gap-2 hover:scale-105 duration-300 cursor-pointer'>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke='white' width={25} fill='white'>
+            <g data-name="18-Arrow Down">
+              <path d="M17 23.59V5h-2v18.59l-5.29-5.3-1.42 1.42 7 7a1 1 0 0 0 1.41 0l7-7-1.41-1.41z"/>
+            </g>
+          </svg>
+          <span>Explore Auctions</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke='white' width={25} fill='white'>
+            <g data-name="18-Arrow Down">
+              <path d="M17 23.59V5h-2v18.59l-5.29-5.3-1.42 1.42 7 7a1 1 0 0 0 1.41 0l7-7-1.41-1.41z"/>
+            </g>
+          </svg>
+        </span>
+      </div>   
+      <div className='bg-slate-400 min-h-screen flex text-white flex-col items-center bg-gradient-to-b from-blue-700 to-white-500'>
+        <h1 className='text-3xl font-bold  mb-32 text-center'>Currently Listed Products</h1>
+        <div>
+          <ProductList Products={Products}/>
+        </div>
+      </div>
     </div>
+   
+    
   )
 }
 
