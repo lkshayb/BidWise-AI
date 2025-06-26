@@ -17,7 +17,7 @@ function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
               <span className="text-2xl font-bold text-blue-400">Auction</span>
               <span className="text-2xl font-bold text-purple-400">Bot</span>
             </div>
-            <div className="text-sm text-gray-300 -mt-1">Voice-Powered Auctions</div>
+            <div className="text-sm text-gray-300 -mt-1">Powered by OmniDimension</div>
           </div>
         
         </div>
