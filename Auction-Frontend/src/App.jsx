@@ -6,7 +6,7 @@ import {ProgressBar} from 'react-loader-spinner'
 //Header
 function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   return (
-    <header className="fixed top-0 left-0 w-full z-50  px-8 py-4 flex items-center justify-between shadow-lg bg-white/10 backdrop-blur-xl">
+    <header className="fixed top-0 left-0 w-full z-50  px-8 py-4 flex items-center justify-between shadow-lg bg-white/20 backdrop-blur-xl">
       <a href="/">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-500">
@@ -508,7 +508,7 @@ function ProductList({Products}){
           </svg>
         </span>
       </div>   
-      <div ref={productref} className='bg-slate-400 min-h-screen flex text-white flex-col items-center bg-gradient-to-b from-blue-700 to-white-500 pt-[120px]'>
+      <div ref={productref} className='bg-slate-900 min-h-screen flex text-white flex-col items-center bg-gradient-to-b from-blue-700 to-white-500 pt-[120px]'>
         <h1 className='text-4xl font-bold  mb-24 text-center'>Currently Listed Products</h1>
         <div>
           <ProductList Products={Products}/>
@@ -518,6 +518,31 @@ function ProductList({Products}){
           <ExpiredproductList Products={Products}/>
         </div>
       </div>
+      <div className="flex text-white flex-col items-center justify-center min-h-screen bg-gradient-to-b from-slate-900 to-black 
+">
+        <div className='items-center text-center flex flex-col justify-center'>
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Future Improvements</h1>
+          </div>
+          <div className='flex flex-wrap gap-3 justify-center mt-[70px]'>
+            <div className='hover:scale-105 w-[400px] py-3 text-xl bg-white/10 backdrop-blur-lg rounded-lg text-center shadow-xl hover:shadow-2xl duration-300'>
+              Implement User Authentication   
+            </div>
+            <div className='hover:scale-105 w-[400px] py-3 text-xl bg-white/10 backdrop-blur-lg rounded-lg text-center shadow-xl hover:shadow-2xl duration-300'>
+              Use WebSocket to auto-refresh timers 
+            </div>
+            <div className='hover:scale-105 w-[400px] py-3 text-xl bg-white/10 backdrop-blur-lg rounded-lg text-center shadow-xl hover:shadow-2xl duration-300'>
+              Outbid Alerts through mail/SMS
+            </div>
+            <div className='hover:scale-105 w-[400px] py-3 text-xl bg-white/10 backdrop-blur-lg rounded-lg text-center shadow-xl hover:shadow-2xl duration-300'>
+              Show Bid History with Real-Time Updates
+            </div>
+          </div>
+          
+
+            
+        </div>
+      </div>   
       
 
     </div>
