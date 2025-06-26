@@ -260,6 +260,14 @@ function App() {
     document.body.appendChild(script);
   }, []);
 
+  setTimeout(() => {
+  const iframe = document.querySelector('iframe[src*="omnidimension"]');
+  if (iframe) {
+    iframe.setAttribute("allow", "microphone; camera");
+  }
+}, 3000);
+
+
   // get product details
   useEffect(() => {
     console.log("request success")
@@ -353,7 +361,7 @@ function ExpiredproductList({Products}){
         wrapperClass=""
         />: null}
       {Products.map((product, index) => (
-        <div key={index} className={`${product.time_remaining.seconds >= 0 ? "hidden" : "block"} bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-lg text-black`}>
+        <div key={index} className={`${product.time_remaining.seconds >= 0 ? "hidden" : "block"} bg-white/50 backdrop-blur-sm w-[400px] py-7 hover:shadow-2xl px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
           <div className='mb-3 flex jutify-between gap-3'>
             <div className='flex gap-3'>
               <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
@@ -395,7 +403,7 @@ function ProductList({Products}){
         wrapperClass=""
         />: null}
       {Products.map((product, index) => (
-        <div key={index} className={`${product.time_remaining.seconds < 0 ? "hidden" : "block"} bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-lg text-black`}>
+        <div key={index} className={`${product.time_remaining.seconds < 0 ? "hidden" : "block"} hover:shadow-2xl bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
           <div className='mb-3 flex jutify-between gap-3'>
             <div className='flex gap-3'>
               <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
