@@ -252,13 +252,13 @@ function App() {
   const nameref = useRef();
   const bidref = useRef()
   // get omnidim widget
-  // useEffect(() => {
-  //   const script = document.createElement('script');
-  //   script.id = 'omnidimension-web-widget';
-  //   script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=8f73fa3f824b7bd2b3c3fc2db8d86ee3';
-  //   script.async = true;
-  //   document.body.appendChild(script);
-  // }, []);
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.id = 'omnidimension-web-widget';
+    script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=8f73fa3f824b7bd2b3c3fc2db8d86ee3';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   // get product details
   useEffect(() => {
