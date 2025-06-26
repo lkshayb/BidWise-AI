@@ -247,7 +247,10 @@ function App() {
   const [getproduct,setgetproducts] = useState(false);
   const [Products,setProducts] = useState([]);
   const productref = useRef();
-
+  const [bid,setbid] = useState(false);
+  const [bidid,setbidid] = useState(0);
+  const nameref = useRef();
+  const bidref = useRef()
   // get omnidim widget
   // useEffect(() => {
   //   const script = document.createElement('script');
@@ -273,10 +276,69 @@ function App() {
       .catch(err => console.error('Error:', err));
   },[])
 
-  // Product Card
-function ProductList({Products}){
- 
- 
+function HandleBid(){
+  const [isloading,setisloading] = useState(false)
+  function Placebid(){
+    
+    const username = nameref.current?.value;
+    const id = bidid
+    const bid_amount = bidref.current?.value
+    if(username.length > 0 && bid_amount > 0){
+      setisloading(true)
+      fetch('https://auction-agent.onrender.com/auctions/bid', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        id : id,
+      
+        bid_amount : bid_amount
+      })
+    })
+      .then(async res => {
+        const contentType = res.headers.get("content-type");
+
+        if (contentType && contentType.includes("application/json")) {
+          const data = await res.json();
+          console.log("Response JSON:", data);
+        } else {
+          const text = await res.text();
+          console.log("Response Text:", text);
+        }
+        setbid(false);
+        alert("Bid Place Successfully")
+      })
+      .catch(err => {
+        console.error('Error:', err);
+      });
+    }else{
+      alert("Please enter a valid name or bid amount")
+    }
+    
+  }
+  return(
+    <div className = {`${bid ? 'flex' : 'hidden'} fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-70`}>
+      <div className='py-10 pt-3 pr-3 pl-3 px-7 rounded-lg bg-white flex flex-col gap-3'>
+        <div className='flex justify-end'>
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='h-8 cursor-pointer' onClick={() => setbid(false)} viewBox="0 0 48 48">
+            <path fill="black" d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"/>
+            <path fill="black" d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"/>
+          </svg>
+        </div>
+        <input ref={nameref} type="text" placeholder='Enter Your Name' className='p-2 rounded-xl border-2'/>
+        <input ref={bidref} type="text" placeholder='Enter Bid Amount' className='p-2 rounded-xl border-2'/>
+        <button onClick={Placebid} className='bg-black hover:opacity-80 border duration-300 text-white rounded-xl p-2 '>
+          {isloading ?" Loading..." : "Place Bid"}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+
+function ExpiredproductList({Products}){
   return (
     <div className='flex'>
       {Products.length == 0 ? 
@@ -291,23 +353,76 @@ function ProductList({Products}){
         wrapperClass=""
         />: null}
       {Products.map((product, index) => (
-        <div key={index} className="bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-lg text-black">
-          <div className='mb-3 flex gap-3'>
-            <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" class="w-8 h-8 text-gray-700" aria-hidden="true">
-                <circle cx="16" cy="11.368" r="3.368" />
-                <path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z" />
-              </svg>
-              {product.no_of_bids}
+        <div key={index} className={`${product.time_remaining.seconds >= 0 ? "hidden" : "block"} bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-lg text-black`}>
+          <div className='mb-3 flex jutify-between gap-3'>
+            <div className='flex gap-3'>
+              <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-8 h-8 text-gray-700" aria-hidden="true">
+                  <circle cx="16" cy="11.368" r="3.368" />
+                  <path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z" />
+                </svg>
+                {product.no_of_bids}
+              </div>
             </div>
-            <div className='bg-blue-400 min-w-[50px]   rounded-full flex items-center h-7 px-2'>
-              <svg xmlns="http://www.w3.org/2000/svg" className='w-5 h-5' viewBox="0 0 32 32">
-                <g data-name="9-Clock">
-                  <path d="M18 4.16V2h1a2 2 0 0 0 2-2l-8 .06A.22.22 0 0 1 13 0h-2a2 2 0 0 0 2 2h1v2.16a14 14 0 1 0 4 0zM16 30a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"/>
-                  <path d="M17 11h-2v7a1 1 0 0 0 .29.71l4 4 1.41-1.41-3.7-3.71z"/>
-                </g>
-              </svg>
-              <div className='ml-2'>{product.time_remaining.days} {product.time_remaining.days ? <span>days :</span> : null} {product.time_remaining.hours} {product.time_remaining.hours ? <span>hrs :</span> : null} {product.time_remaining.minutes} min</div>
+          </div>
+          
+          <span className='font-semibold text-xl'>Name</span> 
+          <div className='text-gray-800  mb-2'>{product.product_name}</div>
+          <span className='font-semibold text-xl'>Description</span> 
+          <div className='text-gray-800 mb-2'>{product.description}</div>
+          <span className='font-semibold text-xl'>Sold For</span>
+          <div className='text-gray-800 mb-2'>₹{product.current_highest_bid}</div>
+          
+        </div>
+      ))} 
+    </div>
+  )
+}
+
+  // Product Card
+function ProductList({Products}){
+  return (
+    <div className='flex'>
+      {Products.length == 0 ? 
+      <ProgressBar
+        visible={true}
+        height="80"
+        width="80"
+        barColor="white"
+        borderColor='white'
+        ariaLabel="progress-bar-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        />: null}
+      {Products.map((product, index) => (
+        <div key={index} className={`${product.time_remaining.seconds < 0 ? "hidden" : "block"} bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-lg text-black`}>
+          <div className='mb-3 flex jutify-between gap-3'>
+            <div className='flex gap-3'>
+              <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-8 h-8 text-gray-700" aria-hidden="true">
+                  <circle cx="16" cy="11.368" r="3.368" />
+                  <path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z" />
+                </svg>
+                {product.no_of_bids}
+              </div>
+              <div className='bg-blue-400 min-w-[50px]   rounded-full flex items-center h-7 px-2'>
+                <svg xmlns="http://www.w3.org/2000/svg" className='w-5 h-5' viewBox="0 0 32 32">
+                  <g data-name="9-Clock">
+                    <path d="M18 4.16V2h1a2 2 0 0 0 2-2l-8 .06A.22.22 0 0 1 13 0h-2a2 2 0 0 0 2 2h1v2.16a14 14 0 1 0 4 0zM16 30a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"/>
+                    <path d="M17 11h-2v7a1 1 0 0 0 .29.71l4 4 1.41-1.41-3.7-3.71z"/>
+                  </g>
+                </svg>
+                <div className='ml-2'>{product.time_remaining.days} {product.time_remaining.days ? <span>days :</span> : null} {product.time_remaining.hours} {product.time_remaining.hours ? <span>hrs :</span> : null} {product.time_remaining.minutes} min</div>
+              </div>
+            </div>
+            
+            <div>
+              <div onClick={() => {
+                setbid(true);
+                setbidid(product.id)
+                }} className='bg-gradient-to-br from-purple-500 to-red-500 px-5 text-gray-200  cursor-pointer hover:opacity-80 duration-300 ease-in rounded-full flex items-center h-7 '>
+                <span>Bid</span>
+              </div>
             </div>
           </div>
           
@@ -326,7 +441,9 @@ function ProductList({Products}){
   return (
    
       <div>
+
       <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
+      <HandleBid/>
       <LoginPromptModal open={showLoginPrompt} onClose={() => setShowLoginPrompt(false)}
         onLogin={() => {
           setShowLoginPrompt(false);
@@ -388,7 +505,13 @@ function ProductList({Products}){
         <div>
           <ProductList Products={Products}/>
         </div>
+        <h1 className='text-4xl font-bold  mb-24 text-center mt-[160px]'>Expired Auctions</h1>
+        <div className='mb-[100px]'>
+          <ExpiredproductList Products={Products}/>
+        </div>
       </div>
+      
+
     </div>
    
     
