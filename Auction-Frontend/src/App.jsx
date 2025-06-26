@@ -390,7 +390,7 @@ function ExpiredproductList({Products}){
   // Product Card
 function ProductList({Products}){
   return (
-    <div className='flex'>
+    <div className='flex flex-wrap justify-center'>
       {Products.length == 0 ? 
       <ProgressBar
         visible={true}
