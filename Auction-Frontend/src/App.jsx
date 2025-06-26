@@ -1,4 +1,4 @@
-import {useEffect, useState } from 'react'
+import {useEffect, useRef, useState } from 'react'
 import './App.css'
 import {motion} from 'framer-motion'
 import {ProgressBar} from 'react-loader-spinner'
@@ -6,7 +6,7 @@ import {ProgressBar} from 'react-loader-spinner'
 //Header
 function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   return (
-    <header className="fixed top-0 left-0 w-full z-50  px-8 py-4 flex items-center justify-between shadow-lg bg-blue-500/30 backdrop-blur-md">
+    <header className="fixed top-0 left-0 w-full z-50  px-8 py-4 flex items-center justify-between shadow-lg bg-white/10 backdrop-blur-xl">
       <a href="/">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-500">
@@ -246,6 +246,7 @@ function App() {
   const [showCallModal, setShowCallModal] = useState(false);
   const [getproduct,setgetproducts] = useState(false);
   const [Products,setProducts] = useState([]);
+  const productref = useRef();
 
   // get omnidim widget
   // useEffect(() => {
@@ -368,13 +369,13 @@ function ProductList({Products}){
         </div>
         
         
-        <span className='mt-32 flex gap-2 hover:scale-105 duration-300 cursor-pointer'>
+        <span onClick={() => productref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })} className='mt-32 flex gap-2 hover:opacity-70 duration-300 cursor-pointer animate-bounce'>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke='white' width={25} fill='white'>
             <g data-name="18-Arrow Down">
               <path d="M17 23.59V5h-2v18.59l-5.29-5.3-1.42 1.42 7 7a1 1 0 0 0 1.41 0l7-7-1.41-1.41z"/>
             </g>
           </svg>
-          <span>Explore Auctions</span>
+          <span className='text-xl'>Explore Auctions</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke='white' width={25} fill='white'>
             <g data-name="18-Arrow Down">
               <path d="M17 23.59V5h-2v18.59l-5.29-5.3-1.42 1.42 7 7a1 1 0 0 0 1.41 0l7-7-1.41-1.41z"/>
@@ -382,8 +383,8 @@ function ProductList({Products}){
           </svg>
         </span>
       </div>   
-      <div className='bg-slate-400 min-h-screen flex text-white flex-col items-center bg-gradient-to-b from-blue-700 to-white-500'>
-        <h1 className='text-3xl font-bold  mb-32 text-center'>Currently Listed Products</h1>
+      <div ref={productref} className='bg-slate-400 min-h-screen flex text-white flex-col items-center bg-gradient-to-b from-blue-700 to-white-500 pt-[120px]'>
+        <h1 className='text-4xl font-bold  mb-24 text-center'>Currently Listed Products</h1>
         <div>
           <ProductList Products={Products}/>
         </div>
