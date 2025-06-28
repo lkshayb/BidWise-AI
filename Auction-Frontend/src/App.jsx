@@ -6,7 +6,7 @@ import {ProgressBar} from 'react-loader-spinner'
 //Header
 function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   return (
-    <header className="fixed top-0 left-0 w-full z-50  px-8 py-4 flex items-center justify-between shadow-lg bg-white/20 backdrop-blur-xl">
+    <header className="fixed top-0 left-0 w-full   px-8 py-4 flex items-center justify-between ">
       <a href="/">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-500">
@@ -403,43 +403,62 @@ function ProductList({Products}){
         wrapperClass=""
         />: null}
       {Products.map((product, index) => (
-        <div key={index} className={`${product.time_remaining.seconds < 0 ? "hidden" : "block"} hover:shadow-2xl bg-white/50 backdrop-blur-sm w-[400px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
-          <div className='mb-3 flex jutify-between gap-3'>
-            <div className='flex gap-3'>
-              <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-8 h-8 text-gray-700" aria-hidden="true">
-                  <circle cx="16" cy="11.368" r="3.368" />
-                  <path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z" />
-                </svg>
-                {product.no_of_bids}
+        <div key={index} className={`${product.time_remaining.seconds < 0 ? "hidden" : "block"} hover:text-blue-500 hover:shadow-2xl bg-white hover:scale-[102%] w-[325px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
+          <div className='flex justify-end'>
+            <div className='rounded-xl hover:fill-white bg-gray-200 p-1 flex gap-2 items-center w-auto hover:bg-gray-400 duration-400 text-black ease-in hover:text-white'>
+              <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32" className='h-5  '>
+                <g data-name="38-Time">
+                  <path d="M28.71 14.29a1 1 0 0 0-1.41 0l-3 3 1.41 1.41 1.19-1.19A12 12 0 1 1 15 4V2a14 14 0 1 0 13.93 15.35l1.36 1.36 1.41-1.41z"/>
+                  <path d="M15 11v5a1 1 0 0 0 .29.71l3 3 1.41-1.41-2.7-2.71V11z"/>
+                </g>
+              </svg>
+              <div>
+                {product.time_remaining.days !== 0 ? <span>{product.time_remaining.days}d </span> : null}
+                {product.time_remaining.hours !== 0 ? <span>{product.time_remaining.hours}hr </span> : null}
+                {product.time_remaining.hours == 0 ? <span>{product.time_remaining.minutes}min </span> : null}
+                {product.time_remaining.minutes == 0 ? <span>{product.time_remaining.seconds}sec </span> : null}
               </div>
-              <div className='bg-blue-400 min-w-[50px]   rounded-full flex items-center h-7 px-2'>
-                <svg xmlns="http://www.w3.org/2000/svg" className='w-5 h-5' viewBox="0 0 32 32">
-                  <g data-name="9-Clock">
-                    <path d="M18 4.16V2h1a2 2 0 0 0 2-2l-8 .06A.22.22 0 0 1 13 0h-2a2 2 0 0 0 2 2h1v2.16a14 14 0 1 0 4 0zM16 30a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"/>
-                    <path d="M17 11h-2v7a1 1 0 0 0 .29.71l4 4 1.41-1.41-3.7-3.71z"/>
-                  </g>
+            </div>
+          </div>
+          <div className='text-2xl font-bold mt-5'>
+            {product.product_name}
+          </div>
+          <div className='text-gray-500 text-sm'>
+            {product.description}
+          </div>
+          <div className='mt-5 flex justify-between items-center'>
+            <div>
+              <div className='text-gray-400 text-sm'>CURRENT BID</div>
+              <div className='text-green-600 text-2xl font-bold'>₹{product.current_highest_bid}</div>
+            </div>
+            <div className='flex flex-col justify-center items-center'>
+              <div className='text-gray-400 text-sm'>BIDS</div>
+              <div className='flex items-center gap-1'>
+                <svg className='h-7' version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 32 32"  xmlspace="preserve">
+                  <path className="st1" d="M22.513 29H9.487a2.953 2.953 0 0 1-2.422-1.24 2.952 2.952 0 0 1-.41-2.69l.465-1.398a4.336 4.336 0 0 1 3.567-2.916c1.398-.171 3.455-.375 5.313-.375s3.914.204 5.312.375a4.333 4.333 0 0 1 3.566 2.915l.001.001.466 1.399a2.953 2.953 0 0 1-.411 2.689A2.951 2.951 0 0 1 22.513 29zM16 22.38c-1.757 0-3.726.196-5.068.361a2.325 2.325 0 0 0-1.914 1.563l-.465 1.398a.974.974 0 0 0 .134.888c.188.26.479.41.8.41h13.025c.32 0 .612-.149.8-.41a.978.978 0 0 0 .136-.888l-.466-1.398a2.322 2.322 0 0 0-1.914-1.563c-1.342-.165-3.311-.361-5.068-.361zM16 19.394c-3.289 0-5.965-2.676-5.965-5.965S12.711 7.464 16 7.464s5.965 2.676 5.965 5.965-2.676 5.965-5.965 5.965zm0-9.93c-2.187 0-3.965 1.779-3.965 3.965s1.778 3.965 3.965 3.965 3.965-1.779 3.965-3.965S18.187 9.464 16 9.464z"/>
                 </svg>
-                <div className='ml-2'>{product.time_remaining.days} {product.time_remaining.days ? <span>days :</span> : null} {product.time_remaining.hours} {product.time_remaining.hours ? <span>hrs :</span> : null} {product.time_remaining.minutes} min</div>
+                <div className='text-xl text-gray-900 font-bold '>
+                  {product.no_of_bids}
+                </div>
               </div>
             </div>
             
-            <div>
-              <div onClick={() => {
+          </div>
+          <button onClick={() => {
+            setbid(true);
+            setbidid(product.id)
+          }} className='w-[100%] bg-black text-white rounded-lg p-2 mt-8 hover:bg-blue-500 duration-300'>
+            Place Bid
+          </button>
+              {/* <div onClick={() => {
                 setbid(true);
                 setbidid(product.id)
                 }} className='bg-gradient-to-br from-purple-500 to-red-500 px-5 text-gray-200  cursor-pointer hover:opacity-80 duration-300 ease-in rounded-full flex items-center h-7 '>
                 <span>Bid</span>
-              </div>
-            </div>
-          </div>
+              </div> */}
+            
           
-          <span className='font-semibold text-xl'>Name</span> 
-          <div className='text-gray-800  mb-2'>{product.product_name}</div>
-          <span className='font-semibold text-xl'>Description</span> 
-          <div className='text-gray-800 mb-2'>{product.description}</div>
-          <span className='font-semibold text-xl'>Current Highest Bid</span>
-          <div className='text-gray-800 mb-2'>₹{product.current_highest_bid}</div>
+       
           
         </div>
       ))} 
@@ -450,7 +469,7 @@ function ProductList({Products}){
    
       <div>
 
-      <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
+      
       <HandleBid/>
       <LoginPromptModal open={showLoginPrompt} onClose={() => setShowLoginPrompt(false)}
         onLogin={() => {
@@ -462,6 +481,7 @@ function ProductList({Products}){
       <CallAgentModal open={showCallModal} onClose={() => setShowCallModal(false)}/>
 
       <div className="flex text-white flex-col items-center justify-center min-h-screen bg-gradient-to-t from-blue-700  to-green-800 pt-20">
+        <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
         <div className='items-center text-center'>
           <div>
             <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Welcome to Auction Bot</h1>
