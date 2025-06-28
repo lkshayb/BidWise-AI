@@ -361,25 +361,35 @@ function ExpiredproductList({Products}){
         wrapperClass=""
         />: null}
       {Products.map((product, index) => (
-        <div key={index} className={`${product.time_remaining.seconds >= 0 ? "hidden" : "block"} bg-white/50 backdrop-blur-sm w-[400px] py-7 hover:shadow-2xl px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
-          <div className='mb-3 flex jutify-between gap-3'>
-            <div className='flex gap-3'>
-              <div className='bg-green-400 min-w-[50px] max-w-[60px] rounded-full flex items-center h-7'>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-8 h-8 text-gray-700" aria-hidden="true">
-                  <circle cx="16" cy="11.368" r="3.368" />
-                  <path d="M20.673 24h-9.346c-.83 0-1.502-.672-1.502-1.502v-.987a5.404 5.404 0 0 1 5.403-5.403h1.544a5.404 5.404 0 0 1 5.403 5.403v.987c0 .83-.672 1.502-1.502 1.502z" />
+        <div key={index} className={`${product.time_remaining.seconds >= 0 ? "hidden" : "block"} hover:text-blue-500 hover:shadow-2xl bg-white hover:scale-[102%] w-[325px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
+          
+          
+          <div className='text-2xl font-bold mt-5'>
+            {product.product_name}
+          </div>
+          <div className='text-gray-500 text-sm'>
+            {product.description}
+          </div>
+          <div className='mt-5 flex justify-between items-center'>
+            <div>
+              <div className='text-gray-400 text-sm'>SOLD AT</div>
+              <div className='text-red-600 text-2xl font-bold'>₹{product.current_highest_bid}</div>
+            </div>
+            <div className='flex flex-col justify-center items-center'>
+              <div className='text-gray-400 text-sm'>BIDS</div>
+              <div className='flex items-center gap-1'>
+                <svg className='h-7' version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 32 32"  xmlspace="preserve">
+                  <path className="st1" d="M22.513 29H9.487a2.953 2.953 0 0 1-2.422-1.24 2.952 2.952 0 0 1-.41-2.69l.465-1.398a4.336 4.336 0 0 1 3.567-2.916c1.398-.171 3.455-.375 5.313-.375s3.914.204 5.312.375a4.333 4.333 0 0 1 3.566 2.915l.001.001.466 1.399a2.953 2.953 0 0 1-.411 2.689A2.951 2.951 0 0 1 22.513 29zM16 22.38c-1.757 0-3.726.196-5.068.361a2.325 2.325 0 0 0-1.914 1.563l-.465 1.398a.974.974 0 0 0 .134.888c.188.26.479.41.8.41h13.025c.32 0 .612-.149.8-.41a.978.978 0 0 0 .136-.888l-.466-1.398a2.322 2.322 0 0 0-1.914-1.563c-1.342-.165-3.311-.361-5.068-.361zM16 19.394c-3.289 0-5.965-2.676-5.965-5.965S12.711 7.464 16 7.464s5.965 2.676 5.965 5.965-2.676 5.965-5.965 5.965zm0-9.93c-2.187 0-3.965 1.779-3.965 3.965s1.778 3.965 3.965 3.965 3.965-1.779 3.965-3.965S18.187 9.464 16 9.464z"/>
                 </svg>
-                {product.no_of_bids}
+                <div className='text-xl text-gray-900 font-bold '>
+                  {product.no_of_bids}
+                </div>
               </div>
             </div>
+            
           </div>
           
-          <span className='font-semibold text-xl'>Name</span> 
-          <div className='text-gray-800  mb-2'>{product.product_name}</div>
-          <span className='font-semibold text-xl'>Description</span> 
-          <div className='text-gray-800 mb-2'>{product.description}</div>
-          <span className='font-semibold text-xl'>Sold For</span>
-          <div className='text-gray-800 mb-2'>₹{product.current_highest_bid}</div>
+          
           
         </div>
       ))} 
