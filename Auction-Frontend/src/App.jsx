@@ -14,8 +14,8 @@ function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
           </div>
           <div>
             <div className="flex items-end gap-1">
-              <span className="text-2xl font-bold text-blue-400">Auction</span>
-              <span className="text-2xl font-bold text-purple-400">Bot</span>
+              <span className="text-2xl font-bold text-blue-400">BidWise</span>
+              <span className="text-2xl font-bold text-purple-400">AI</span>
             </div>
             <div className="text-sm text-gray-300 -mt-1">Powered by OmniDimension</div>
           </div>
@@ -24,13 +24,17 @@ function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
       </a>
       <div className="flex items-center gap-4">
         <button onClick={() => document.getElementById('chat-helper-button')?.click()} className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold shadow hover:opacity-90 transition">
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+            <path d="M12 3v10m0 0a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v2a4 4 0 0 0 4 4zm0 0v4m-4 0h8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </button>
         <button
           onClick={loggedIn ? () => setShowCallModal(true) : () => setShowLoginPrompt(true)}
           className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-semibold shadow hover:opacity-90 transition"
         >
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.34a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.74.34 1.53.57 2.34.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </button>
       </div>
     </header>
@@ -415,7 +419,7 @@ function ProductList({Products}){
       {Products.map((product, index) => (
         <div key={index} className={`${product.time_remaining.seconds < 0 ? "hidden" : "block"} hover:text-blue-500 hover:shadow-2xl bg-white hover:scale-[102%] w-[325px] py-7  px-5 rounded-xl m-2 rounded-xl shadow-md duration-300 text-black`}>
           <div className='flex justify-end'>
-            <div className='rounded-xl hover:fill-white bg-gray-200 p-1 flex gap-2 items-center w-auto hover:bg-gray-400 duration-400 text-black ease-in hover:text-white'>
+            <div className='rounded-xl hover:fill-white bg-gray-200 p-1 flex gap-2 items-center w-auto hover:bg-gray-400 duration-300 text-black ease-in hover:text-white'>
               <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32" className='h-5  '>
                 <g data-name="38-Time">
                   <path d="M28.71 14.29a1 1 0 0 0-1.41 0l-3 3 1.41 1.41 1.19-1.19A12 12 0 1 1 15 4V2a14 14 0 1 0 13.93 15.35l1.36 1.36 1.41-1.41z"/>
@@ -460,12 +464,7 @@ function ProductList({Products}){
           }} className='w-[100%] bg-black text-white rounded-lg p-2 mt-8 hover:bg-blue-500 duration-300'>
             Place Bid
           </button>
-              {/* <div onClick={() => {
-                setbid(true);
-                setbidid(product.id)
-                }} className='bg-gradient-to-br from-purple-500 to-red-500 px-5 text-gray-200  cursor-pointer hover:opacity-80 duration-300 ease-in rounded-full flex items-center h-7 '>
-                <span>Bid</span>
-              </div> */}
+              
             
           
        
@@ -494,7 +493,7 @@ function ProductList({Products}){
         <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
         <div className='items-center text-center'>
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Welcome to Auction Bot</h1>
+            <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Welcome to BidWiseAI</h1>
           </div>
           <div>
             <p className="text-lg text-gray-300 text-center">Discover amazing deals and place bids with your voice. </p>
