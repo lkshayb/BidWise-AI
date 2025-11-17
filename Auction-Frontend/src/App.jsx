@@ -2,7 +2,7 @@ import {useEffect, useRef, useState } from 'react'
 import './App.css'
 import {motion} from 'framer-motion'
 import {ProgressBar} from 'react-loader-spinner'
-
+import Header1 from './comp/header'
 //Header
 function Header({loggedIn , setShowCallModal , setShowLoginPrompt}) {
   return (
@@ -490,7 +490,7 @@ function ProductList({Products}){
       <CallAgentModal open={showCallModal} onClose={() => setShowCallModal(false)}/>
 
       <div className="flex text-white flex-col items-center justify-center min-h-screen bg-gradient-to-t from-blue-700  to-green-800 pt-20">
-        <Header loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
+        <Header1 loggedIn = {loggedIn} setShowCallModal = {setShowCallModal} setShowLoginPrompt = {setShowLoginPrompt}/>
         <div className='items-center text-center'>
           <div>
             <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-center">Welcome to BidWiseAI</h1>
